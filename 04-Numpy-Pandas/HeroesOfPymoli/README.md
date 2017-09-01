@@ -87,24 +87,15 @@ purAnalysis_df
 <div>
 <style>
     .dataframe thead tr:only-child th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
         text-align: right;
-        font-size: 2px;
     }
 
     .dataframe thead th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
         text-align: left;
-        font-size: 2px;
     }
 
     .dataframe tbody tr th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
         vertical-align: top;
-        font-size: 2px;
     }
 </style>
 <table border="1" class="dataframe">
@@ -673,23 +664,14 @@ profItems_df
 <div>
 <style>
     .dataframe thead tr:only-child th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
-        font-size: 50px;
         text-align: right;
     }
 
     .dataframe thead th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
-        font-size: 75px;
         text-align: left;
     }
 
     .dataframe tbody tr th {
-        font-family: "Courier New", Georgia, Serif;
-        font-style: italic;
-        font-size: 100px;
         vertical-align: top;
     }
 </style>
