@@ -88,14 +88,17 @@ purAnalysis_df
 <style>
     .dataframe thead tr:only-child th {
         text-align: right;
+        font-size: 10px;
     }
 
     .dataframe thead th {
         text-align: left;
+        font-size: 10px;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+        font-size: 10px;
     }
 </style>
 <table border="1" class="dataframe">
