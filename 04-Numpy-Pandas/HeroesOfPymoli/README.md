@@ -675,21 +675,21 @@ profItems_df
     .dataframe thead tr:only-child th {
         font-family: "Courier New", Georgia, Serif;
         font-style: italic;
-        font-size: 2px;
+        font-size: 50px;
         text-align: right;
     }
 
     .dataframe thead th {
         font-family: "Courier New", Georgia, Serif;
         font-style: italic;
-        font-size: 2px;
+        font-size: 75px;
         text-align: left;
     }
 
     .dataframe tbody tr th {
         font-family: "Courier New", Georgia, Serif;
         font-style: italic;
-        font-size: 2px;
+        font-size: 100px;
         vertical-align: top;
     }
 </style>
