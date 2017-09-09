@@ -14,43 +14,126 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 cityData = pd.read_csv('raw_data/city_data.csv')
 rideData = pd.read_csv('raw_data/ride_data.csv')
+typColor = {'Urban':'lightcoral','Suburban':'lightskyblue','Rural':'gold'}
+colors = ["gold","lightskyblue","lightcoral"]
+explode = (0, 0, 0.1)
 ```
 
 ### Bubble Plot of Ride Sharing Data
 
 
 ```python
-cityDataUnqTyp = cityData.drop_duplicates(['city'])
-cityDataUnqTyp = cityDataUnqTyp.set_index(['city'])
-cityDataUnqTyp.index.name = ''
-cityDataUnqTyp = cityDataUnqTyp[['type']]
-df_cityDataIntrm1 = pd.DataFrame({'AverageFare': rideData.groupby('city').fare.mean(),
+df_cityDataFinal = pd.DataFrame({'AverageFare': rideData.groupby('city').fare.mean(),
                    'NoOfRides': rideData.groupby('city').ride_id.nunique(),
-                   'DriverCount': cityData.groupby('city').driver_count.sum()})
-df_cityDataFinal = df_cityDataIntrm1.join(cityDataUnqTyp)
-sns.lmplot(x='NoOfRides', y='AverageFare', data=df_cityDataFinal, scatter_kws={"edgecolor":"black","s": (df_cityDataFinal['DriverCount'] * 7)}, legend_out = False,
-           palette={'Urban':'lightcoral','Rural':'gold','Suburban':'lightskyblue'}, fit_reg=False, size=12, aspect=1.5, hue='type')
+                   'DriverCount': cityData.groupby('city').driver_count.sum(),
+                    'type': cityData.groupby('city').type.apply(lambda x : ''.join(x.unique()))})
+df_cityDataFinal['TotalFare'] = df_cityDataFinal['AverageFare'] * df_cityDataFinal['NoOfRides']
+```
+
+
+```python
+df_cityDataFinal.head()
+```
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AverageFare</th>
+      <th>DriverCount</th>
+      <th>NoOfRides</th>
+      <th>type</th>
+      <th>TotalFare</th>
+    </tr>
+    <tr>
+      <th>city</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alvarezhaven</th>
+      <td>23.928710</td>
+      <td>21</td>
+      <td>31</td>
+      <td>Urban</td>
+      <td>741.79</td>
+    </tr>
+    <tr>
+      <th>Alyssaberg</th>
+      <td>20.609615</td>
+      <td>67</td>
+      <td>26</td>
+      <td>Urban</td>
+      <td>535.85</td>
+    </tr>
+    <tr>
+      <th>Anitamouth</th>
+      <td>37.315556</td>
+      <td>16</td>
+      <td>9</td>
+      <td>Suburban</td>
+      <td>335.84</td>
+    </tr>
+    <tr>
+      <th>Antoniomouth</th>
+      <td>23.625000</td>
+      <td>21</td>
+      <td>22</td>
+      <td>Urban</td>
+      <td>519.75</td>
+    </tr>
+    <tr>
+      <th>Aprilchester</th>
+      <td>21.981579</td>
+      <td>49</td>
+      <td>19</td>
+      <td>Urban</td>
+      <td>417.65</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+plt.figure(figsize=(18,12))
+patches11 = [ plt.plot([],[], marker="o", ms=10, ls="", mec="black", mew=0.7, color=list(typColor.values())[i]) [0]  for i in range(len(typColor))]
+plt.scatter(x=df_cityDataFinal['NoOfRides'], y=df_cityDataFinal['AverageFare'], s=(df_cityDataFinal['DriverCount']*10), c=df_cityDataFinal['type'].apply(lambda x: typColor[x]), edgecolor="k", linewidth=0.7)
+plt.legend(patches11,typColor.keys(),loc="best", frameon=True, edgecolor='black', labelspacing=1, title="City Types")
 plt.gca().set(xlabel='Total Number of Rides(Per City)', ylabel='Average Fare($)', title='Pyber Ride Sharing Data(2016)')
-plt.legend(loc="best", frameon=True, edgecolor='black', labelspacing=2)
 plt.show()
 ```
 
 
-![png](output_7_0.png)
+![png](output_9_0.png)
 
-
-#### Creating 'TotalFare' column and additional settings for next set of calculations and visualizations
-
-
-```python
-df_cityDataFinal['TotalFare'] = df_cityDataFinal['AverageFare'] * df_cityDataFinal['NoOfRides']
-colors = ["gold","lightskyblue","lightcoral"]
-explode = (0, 0, 0.1)
-```
 
 ### Total Fares By City Type
 
