@@ -97,91 +97,11 @@ plt.show()
 
 
 ```python
-merged_data1 = merged_data.groupby(['Drug','Timepoint'])[['Tumor Volume (mm3)']].mean()
-lst = merged_data1.groupby('Drug')[['Tumor Volume (mm3)']].last()
-fst = merged_data1.groupby('Drug')[['Tumor Volume (mm3)']].first()
-sbg = round(((lst - fst) / fst ) * 100, 2)
-sbg.columns = ['%Tumor Volume Change']
-sbg
-```
-
-
-
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>%Tumor Volume Change</th>
-    </tr>
-    <tr>
-      <th>Drug</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Capomulin</th>
-      <td>-19.48</td>
-    </tr>
-    <tr>
-      <th>Ceftamin</th>
-      <td>42.52</td>
-    </tr>
-    <tr>
-      <th>Infubinol</th>
-      <td>46.12</td>
-    </tr>
-    <tr>
-      <th>Ketapril</th>
-      <td>57.03</td>
-    </tr>
-    <tr>
-      <th>Naftisol</th>
-      <td>53.92</td>
-    </tr>
-    <tr>
-      <th>Placebo</th>
-      <td>51.30</td>
-    </tr>
-    <tr>
-      <th>Propriva</th>
-      <td>47.24</td>
-    </tr>
-    <tr>
-      <th>Ramicane</th>
-      <td>-22.32</td>
-    </tr>
-    <tr>
-      <th>Stelasyn</th>
-      <td>52.09</td>
-    </tr>
-    <tr>
-      <th>Zoniferol</th>
-      <td>46.58</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
+tvc = []
+for column_nm in tr_pivot.columns:
+    tvc.append(round((((tr_pivot[column_nm][45] - tr_pivot[column_nm][0]) / tr_pivot[column_nm][0]) * 100), 2)  ) 
+sbg = pd.DataFrame({'%Tumor Volume Change': tvc},
+                   index=tr_pivot.columns)
 x=sbg.index
 y=sbg['%Tumor Volume Change']
 plt.figure(figsize=(18,12))
@@ -202,5 +122,5 @@ plt.show()
 ```
 
 
-![png](output_15_0.png)
+![png](output_14_0.png)
 
